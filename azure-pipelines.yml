@@ -9,6 +9,15 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+- group: New variable group nithish
+
 steps:
 - script: echo Hello, world!
   displayName: 'HELLO WORLD'
+
+- script: echo "Runnaing app name is $(APP_NAME)"
+  displayName: 'App name'
+
+- script: echo "App environment is $(APP_ENV)"
+  displayName: 'App environment'
