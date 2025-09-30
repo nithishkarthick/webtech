@@ -26,3 +26,9 @@ steps:
 
 - script: echo "Deploying to $(APP_NAME) to $(APP_ENV) evvironment"
   displayName: 'using variables'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    artifact: 'helloworld'
+    publishLocation: 'pipeline'
