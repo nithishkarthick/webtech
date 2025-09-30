@@ -16,4 +16,8 @@ steps:
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
+    echo "step: 1 print date"
+    date
+    echo "show current directory"
+    pwd
   displayName: 'Run a multi-line script'
