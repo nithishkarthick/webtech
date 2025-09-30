@@ -1,0 +1,32 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+strategy:
+ matrix:
+   linux:
+     vmImage: 'ubuntu-latest'
+   windows:
+     vmImage: 'windows-latest'
+
+pool:
+ vmImage: $(vmImage)
+
+variables:
+- group: New variable group nithish
+
+steps:
+- script: echo Hello, world!
+  displayName: 'HELLO WORLD'
+
+- script: echo "Hello from $(Agent.os)"
+  displayName: 'print os'
+
+- script: echo "Runnaing app name is $(APP_NAME)"
+  displayName: 'App name'
+
+- script: echo "App environment is $(APP_ENV)"
+  displayName: 'App environment'
