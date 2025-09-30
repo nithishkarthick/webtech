@@ -10,9 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  app_name: "MYAPP"
-  env: "DEV"
-
+- group: New variable group nithish
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
@@ -26,5 +24,5 @@ steps:
     pwd
   displayName: 'Run a multi-line script'
 
-- script: echo "Deploying to $(app_name) to $(env) evvironment"
+- script: echo "Deploying to $(APP_NAME) to $(APP_ENV) evvironment"
   displayName: 'using variables'
