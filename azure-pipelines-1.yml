@@ -9,6 +9,10 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  app_name: "MYAPP"
+  env: "DEV"
+
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
@@ -21,3 +25,6 @@ steps:
     echo "show current directory"
     pwd
   displayName: 'Run a multi-line script'
+
+- script: echo "Deploying to $(app_name) to $(env) evvironment"
+  displayName: 'using variables'
