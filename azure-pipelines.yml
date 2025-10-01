@@ -9,15 +9,18 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-variables:
-- group: New variable group nithish
+jobs:
+  - job: job1
+    steps:
+      - script: echo "This is job1"
+        displayName: 'Job1 is executed'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'HELLO WORLD'
-
-- script: echo "Runnaing app name is $(APP_NAME)"
-  displayName: 'App name'
-
-- script: echo "App environment is $(APP_ENV)"
-  displayName: 'App environment'
+  - job: job1
+    steps:
+      - script: echo "This is job2"
+        displayName: 'Job2 is executed'
+  
+  - job: job3
+    steps:
+      - script: echo "This is job3"
+        displayName: 'Job 3 is executed'
