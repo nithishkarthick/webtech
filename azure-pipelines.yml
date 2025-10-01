@@ -15,7 +15,7 @@ jobs:
       - script: echo "This is job1"
         displayName: 'Job1 is executed'
 
-  - job: job1
+  - job: job2
     steps:
       - script: echo "This is job2"
         displayName: 'Job2 is executed'
