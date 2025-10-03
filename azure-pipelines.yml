@@ -39,13 +39,11 @@ stages:
                  displayName: "Deploy To Web Server 1"
                  inputs:
                    targetType: inline
-                   script: |
-                    Copy-Item "$(Pipeline.Workspace)/drop/output.txt" "\\WebServer1\c$\inetpub\wwwroot\hello.txt" -Force
+                   script: echo " deployded webserver 1"
               
                - task: PowerShell@2
                  displayName: "Deploy webserver 2"
                  inputs:
                    targetType: inline
-                   script: |
-                    Copy-Item "$(Pipeline.Workspace)/drop/output.txt" "\\Webserver1\c$\inetpub\wwwroot\hello.txt" -Force
+                   script: echo "Deployded Webserver 2"
                - script: echo "Deployment completed"
