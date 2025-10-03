@@ -6,49 +6,46 @@
 trigger:
 - main
 
-parameters:
-  - name: environment
-    type: string
-    default: dev
-    values:
-      - dev
-      - prod
-
 pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: TestApp
+  - stage: BuildStage
+    displayName: Build
     jobs:
-      - job: TestFrontend
-        displayName: TestFrontendApp
+      - job: BuildApp
+        displayName: buildaapplication
         steps:
-          - script: echo "Test the appplication"
+          - script: echo "hi this is my build application" > output.txt
+          - publish: $(System.DefaultWorkingDirectory)/output.txt
+            artifact: drop
 
-  
-  - stage: DeployUS1
-    dependsOn: TestApp
+  - stage: Deploystage
+    displayName: Deploy
     jobs:
-      - job: DeployUS1
-        displayName: DeployApptoUS1
-        steps:
-          - script: echo "Deploy application US1 to ${{ parameters.environment}}"
-  
-  - stage: DeployUS2
-    dependsOn: TestApp
-    jobs:
-      - job: DeployUS2
-        displayName: DeployApptoUS2
-        steps:
-          - script: echo "Deploy application US2 to ${{ parameters.environment}} environment"
-  
-  - stage: DeployEurope
-    dependsOn:
-    - DeployUS1
-    - DeployUS2
-    jobs:
-      - job: DeploytoEurope
-        displayName: DeployApptoEurope
-        steps:
-          - script: echo "Deploy application to Europe in ${{ parameters.environment}} environment"
- 
+      - deployment: DeployApp
+        displayName: DeployTheApplication
+        environment: prod
+        strategy:
+         runOnce:
+           deploy:
+             steps:
+               - download: current
+                 artifact: drop
+               - script: echo "Starting deployment to IIS server"
+
+               
+               - task: PowerShell@2
+                 displayName: "Deploy To Web Server 1"
+                 inputs:
+                   targetType: inline
+                   script: |
+                    Copy-Item "$(Pipeline.Workspace)/drop/output.txt" "\\WebServer1\c$\inetpub\wwwroot\hello.txt" -Force
+              
+               - task: PowerShell@2
+                 displayName: "Deploy webserver 2"
+                 inputs:
+                   targetType: inline
+                   script: |
+                    Copy-Item "$(Pipeline.Workspace)/drop/output.txt" "\\Webserver1\c$\inetpub\wwwroot\hello.txt" -Force
+               - script: echo "Deployment completed"
